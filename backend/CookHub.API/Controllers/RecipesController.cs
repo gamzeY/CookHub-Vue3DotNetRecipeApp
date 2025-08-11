@@ -177,7 +177,14 @@ namespace CookHub.API.Controllers
             {
                 Console.WriteLine($"Attempting to delete recipe with ID: {id}");
                 Console.WriteLine($"Current recipes count: {_recipes.Count}");
-                Console.WriteLine($"Available recipe IDs: {string.Join(", ", _recipes.Select(r => r.RecipeId))}");
+                
+                // Fix the LINQ issue by using a simpler approach
+                var recipeIds = new List<int>();
+                foreach (var r in _recipes)
+                {
+                    recipeIds.Add(r.RecipeId);
+                }
+                Console.WriteLine($"Available recipe IDs: {string.Join(", ", recipeIds)}");
                 
                 var recipe = _recipes.FirstOrDefault(r => r.RecipeId == id);
                 if (recipe == null)
