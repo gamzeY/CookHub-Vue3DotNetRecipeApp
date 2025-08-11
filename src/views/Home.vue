@@ -200,7 +200,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import store from "../store";
 import list from "../axios";
@@ -208,7 +208,11 @@ import list from "../axios";
 const router = useRouter();
 const route = useRoute();
 
-const ingredients = computed(() => store.state.searchedRecipes);
+const ingredients = computed(() => {
+  console.log('Current recipes in store:', store.state.searchedRecipes);
+  console.log('Recipe count:', store.state.searchedRecipes.length);
+  return store.state.searchedRecipes;
+});
 const search = ref("");
 
 const openRecipe = (item) => {
@@ -250,17 +254,17 @@ watch(() => route.query.category, (newCategory) => {
     }).catch((error) => {
       console.error('Error fetching recipes by category:', error);
     });
+  } else {
+    // If no category filter, fetch all recipes
+    list.get(`recipes`).then((response) => {
+      store.commit("setRecipes", response.data);
+    }).catch((error) => {
+      console.error('Error fetching all recipes:', error);
+    });
   }
 }, { immediate: true });
 
-onMounted(() => {
-  // Only fetch all recipes if no category filter is applied
-  if (!route.query.category) {
-    list.get(`recipes`).then((response) => {
-      store.commit("setRecipes", response.data);
-    });
-  }
-});
+// onMounted is handled by the watch with immediate: true
 </script>
 
 <style scoped>

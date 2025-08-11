@@ -121,7 +121,6 @@ const submitForm = async () => {
       .split(",")
       .map((item) => item.trim());
     const recipeData = {
-      recipeId: parseInt(route.params.id),
       name: name.value,
       categoryId: parseInt(category.value),
       description: description.value,
@@ -135,6 +134,13 @@ const submitForm = async () => {
       protein: parseFloat(protein.value) || 0,
       area: area.value,
     };
+    
+    // Edit mode'da recipeId ekle
+    if (mode === "edit") {
+      recipeData.recipeId = parseInt(route.params.id);
+    }
+    
+    console.log('Sending recipe data:', recipeData);
     let response;
     if (mode === "edit") {
       response = await store.dispatch("updateRecipe", recipeData);
@@ -151,13 +157,12 @@ const submitForm = async () => {
       }
     } else {
       response = await store.dispatch("addRecipe", recipeData);
+      console.log('Add recipe response in component:', response);
       if (response.status === 201) {
         showAlert("success", "Recipe created successfully");
         setTimeout(() => {
-          router.push({
-            name: "RecipeDetails",
-            params: { id: response.data.recipeId },
-          });
+          // Home sayfasına yönlendir ve yeni recipe'yi göster
+          router.push({ name: "Home" });
         }, 2000);
       } else {
         showAlert("error", "Error creating recipe");
@@ -165,8 +170,25 @@ const submitForm = async () => {
     }
       } catch (error) {
       console.error("Error submitting form:", error);
-      console.error("Error details:", error.response?.data);
-      showAlert("error", `Error submitting form: ${error.response?.data || error.message}`);
+      console.error("Error response:", error.response);
+      console.error("Error status:", error.response?.status);
+      console.error("Error data:", error.response?.data);
+      console.error("Error message:", error.message);
+      
+      let errorMessage = "Error submitting form";
+      if (error.response?.data) {
+        if (typeof error.response.data === 'string') {
+          errorMessage = error.response.data;
+        } else if (error.response.data.message) {
+          errorMessage = error.response.data.message;
+        } else if (error.response.data.errors) {
+          errorMessage = Object.values(error.response.data.errors).flat().join(', ');
+        }
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
+      showAlert("error", errorMessage);
     }
   isSubmitting.value = false;
 };

@@ -5,5 +5,6 @@ export function setRecipes(state, recipes) {
 
 export function addRecipe (state, recipe) {
   state.recipes.push(recipe);
+  state.searchedRecipes.push(recipe);
 }
 
