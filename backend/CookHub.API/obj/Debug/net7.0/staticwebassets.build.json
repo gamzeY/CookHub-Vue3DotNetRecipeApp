@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "J+YrUFfDrgxzNrqyBYdxsR2zU8Q9M8+GNUt1XiDI2wY=",
+  "Source": "CookHub.API",
+  "BasePath": "_content/CookHub.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "UgVpr4zPMuWypNBC+wx3XeUhEiyy40EFrHjsVRshyHiIjVcWrhROdJuHzA/7fZHtFxqKgWeNb74jGxhau9qvsw==",
+  "success": true,
+  "projectFilePath": "/Users/gamze/Desktop/untitled folder 2/CookHub-Vue3DotNetRecipeApp/backend/CookHub.API/CookHub.API.csproj",
+  "expectedPackageFiles": [
+    "/Users/gamze/.nuget/packages/microsoft.aspnetcore.openapi/7.0.15/microsoft.aspnetcore.openapi.7.0.15.nupkg.sha512",
+    "/Users/gamze/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "/Users/gamze/.nuget/packages/microsoft.openapi/1.4.3/microsoft.openapi.1.4.3.nupkg.sha512",
+    "/Users/gamze/.nuget/packages/swashbuckle.aspnetcore/6.5.0/swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
+    "/Users/gamze/.nuget/packages/swashbuckle.aspnetcore.swagger/6.5.0/swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
+    "/Users/gamze/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.5.0/swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",
+    "/Users/gamze/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.5.0/swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}
