@@ -30,9 +30,11 @@ export async function getRecipeById({ commit }, id) {
 }
 export async function deleteRecipe({ commit }, id) {
   try {
+    console.log("Deleting recipe with ID:", id);
     const response = await list.delete(`recipes/${id}`);
-    commit("setRecipes", response.data);
-    return response.data;
+    console.log("Delete response:", response);
+    // Don't commit response.data since DELETE returns 204 No Content
+    return response;
   } catch (error) {
     console.error("Error deleting recipe:", error);
     throw error;

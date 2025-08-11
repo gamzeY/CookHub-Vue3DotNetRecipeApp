@@ -95,6 +95,20 @@ namespace CookHub.API.Controllers
                 Instructions = "1. Season salmon with herbs\n2. Grill for 4-5 minutes per side\n3. Serve with lemon wedges\n4. Garnish with fresh herbs",
                 Ingredients = new List<string> { "Salmon fillet", "Lemon", "Fresh herbs", "Olive oil", "Salt", "Black pepper" }
             },
+            new Recipe
+            {
+                RecipeId = 10,
+                Name = "Test Recipe for Deletion",
+                Description = "This is a test recipe to verify delete functionality",
+                ImageUrl = "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&h=300&fit=crop&v=test",
+                Calories = 300,
+                Fat = 15,
+                Carbs = 25,
+                Protein = 20,
+                CategoryId = 1,
+                Instructions = "1. Test step one\n2. Test step two\n3. Test step three",
+                Ingredients = new List<string> { "Test ingredient 1", "Test ingredient 2", "Test ingredient 3" }
+            },
         };
 
         [HttpGet]
@@ -159,12 +173,30 @@ namespace CookHub.API.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteRecipe(int id)
         {
-            var recipe = _recipes.FirstOrDefault(r => r.RecipeId == id);
-            if (recipe == null)
-                return NotFound();
+            try
+            {
+                Console.WriteLine($"Attempting to delete recipe with ID: {id}");
+                Console.WriteLine($"Current recipes count: {_recipes.Count}");
+                Console.WriteLine($"Available recipe IDs: {string.Join(", ", _recipes.Select(r => r.RecipeId))}");
+                
+                var recipe = _recipes.FirstOrDefault(r => r.RecipeId == id);
+                if (recipe == null)
+                {
+                    Console.WriteLine($"Recipe with ID {id} not found");
+                    return NotFound();
+                }
 
-            _recipes.Remove(recipe);
-            return NoContent();
+                Console.WriteLine($"Found recipe: {recipe.Name}");
+                _recipes.Remove(recipe);
+                Console.WriteLine($"Recipe deleted. New count: {_recipes.Count}");
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception in DeleteRecipe: {ex.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
+                return BadRequest($"Error deleting recipe: {ex.Message}");
+            }
         }
     }
 }

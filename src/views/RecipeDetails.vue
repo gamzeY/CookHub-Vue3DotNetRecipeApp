@@ -241,11 +241,16 @@ const editRecipe = (mode) => {
 
 const confirmDelete = async () => {
   try {
-    await store.dispatch("deleteRecipe", recipeId);
-    router.push("/");
-    dialog.value = false;
+    const response = await store.dispatch("deleteRecipe", recipeId);
+    if (response.status === 204) {
+      router.push("/");
+      dialog.value = false;
+    } else {
+      console.error("Unexpected response status:", response.status);
+    }
   } catch (error) {
     console.error("Error deleting recipe:", error);
+    console.error("Error details:", error.response?.data);
   }
 };
 
