@@ -3,7 +3,7 @@
     <v-card class="categories-card" elevation="4">
       <v-card-title class="categories-title">
         <v-icon left size="large" color="primary">mdi-food-fork-drink</v-icon>
-        Recipe Categories
+        sdasd
       </v-card-title>
       
       <v-card-text class="categories-subtitle">
@@ -83,13 +83,13 @@ onMounted(async () => {
     ];
   }
 });
-
 const selectCategory = (categoryId) => {
   // Navigate to home with category filter
   router.push({ name: 'Home', query: { category: categoryId } });
   
   // Fetch recipes by category
   list.get(`recipes/byCategory/${categoryId}`).then((response) => {
+  console.log('Recipes fetched for category:', categoryId, response.data);
     store.commit('setRecipes', response.data);
   }).catch((error) => {
     console.error('Error fetching recipes by category:', error);

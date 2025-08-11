@@ -16,6 +16,7 @@
         <v-textarea v-model="description" label="Description"></v-textarea>
         <v-text-field v-model="imageUrl" label="Image URL"></v-text-field>
         <v-text-field v-model="videoUrl" label="Video URL"></v-text-field>
+        <v-text-field v-model="instructions" label="Instructions"></v-text-field>
         <v-textarea
           v-model="ingredients"
           label="Ingredients (separate with commas)"
@@ -71,6 +72,7 @@ const route = useRoute();
 const name = ref("");
 const category = ref("");
 const description = ref("");
+const instructions = ref("");
 const imageUrl = ref("");
 const videoUrl = ref("");
 const ingredients = ref("");
@@ -93,6 +95,7 @@ onMounted(async () => {
       name.value = recipeData.name;
       category.value = recipeData.categoryId;
       description.value = recipeData.description;
+      instructions.value = recipeData.instructions;
       imageUrl.value = recipeData.imageUrl;
       videoUrl.value = recipeData.videoUrl;
       ingredients.value = recipeData.ingredients.join(", ");
@@ -122,6 +125,7 @@ const submitForm = async () => {
       name: name.value,
       categoryId: category.value,
       description: description.value,
+      instructions: instructions.value,
       imageUrl: imageUrl.value,
       videoUrl: videoUrl.value,
       ingredients: ingredientsArray,

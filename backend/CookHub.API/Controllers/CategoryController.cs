@@ -12,7 +12,6 @@ namespace CookHub.API.Controllers
             new Category { CategoryId = 1, Name = "Salads", Description = "Fresh and healthy salads" },
             new Category { CategoryId = 2, Name = "Desserts", Description = "Sweet treats and desserts" },
             new Category { CategoryId = 3, Name = "Main Dishes", Description = "Main course dishes" },
-            new Category { CategoryId = 4, Name = "Appetizers", Description = "Starters and appetizers" }
         };
 
         [HttpGet]

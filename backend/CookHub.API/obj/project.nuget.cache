@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "UgVpr4zPMuWypNBC+wx3XeUhEiyy40EFrHjsVRshyHiIjVcWrhROdJuHzA/7fZHtFxqKgWeNb74jGxhau9qvsw==",
+  "dgSpecHash": "A6kqnaNbAqDZmE9qkYx+aYBFr+k6bPAveZ2t5wJQ3BP6ffUIbt9sw4rPoa82Q6bff9oNjaf7IzhxvpjxYI6QlA==",
   "success": true,
-  "projectFilePath": "/Users/gamze/Desktop/untitled folder 2/CookHub-Vue3DotNetRecipeApp/backend/CookHub.API/CookHub.API.csproj",
+  "projectFilePath": "/Users/gamze/Desktop/cookhub/CookHub-Vue3DotNetRecipeApp/backend/CookHub.API/CookHub.API.csproj",
   "expectedPackageFiles": [
     "/Users/gamze/.nuget/packages/microsoft.aspnetcore.openapi/7.0.15/microsoft.aspnetcore.openapi.7.0.15.nupkg.sha512",
     "/Users/gamze/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",

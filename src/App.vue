@@ -162,11 +162,10 @@ const getCategoryAbbreviation = (categoryId) => {
 
 const getCategoryFullName = (categoryId) => {
   const fullNames = {
-    1: "Pasta & Italian",
-    2: "Salads & Fresh",
-    3: "Desserts & Sweets",
-    4: "Main Dishes",
-    5: "Appetizers & Snacks"
+    1: "Salads & Fresh",
+    2: "Desserts & Sweets",
+    3: "Main Dishes",
+    4: "Appetizers & Snacks"
   };
   return fullNames[categoryId] || "Unknown Category";
 };

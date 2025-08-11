@@ -9,20 +9,7 @@ namespace CookHub.API.Controllers
     {
         private static List<Recipe> _recipes = new List<Recipe>
         {
-            new Recipe
-            {
-                RecipeId = 1,
-                Name = "Spaghetti Carbonara",
-                Description = "Classic Italian pasta dish with eggs, cheese, and pancetta",
-                ImageUrl = "https://images.unsplash.com/photo-1621996346565-e3dbc353d2e5?w=400&h=300&fit=crop&v=food1",
-                Calories = 650,
-                Fat = 25,
-                Carbs = 75,
-                Protein = 25,
-                CategoryId = 1,
-                Instructions = "1. Cook pasta according to package directions\n2. Cook pancetta until crispy\n3. Mix eggs and cheese\n4. Combine all ingredients",
-                Ingredients = new List<string> { "Spaghetti", "Eggs", "Parmesan cheese", "Pancetta", "Black pepper" }
-            },
+           
             new Recipe
             {
                 RecipeId = 2,
@@ -33,7 +20,7 @@ namespace CookHub.API.Controllers
                 Fat = 15,
                 Carbs = 10,
                 Protein = 35,
-                CategoryId = 2,
+                CategoryId = 1,
                 Instructions = "1. Grill chicken breast\n2. Wash and chop lettuce\n3. Make Caesar dressing\n4. Combine all ingredients",
                 Ingredients = new List<string> { "Romaine lettuce", "Chicken breast", "Parmesan cheese", "Croutons", "Caesar dressing" }
             },
@@ -47,7 +34,7 @@ namespace CookHub.API.Controllers
                 Fat = 8,
                 Carbs = 18,
                 Protein = 2,
-                CategoryId = 3,
+                CategoryId = 2,
                 Instructions = "1. Cream butter and sugar\n2. Add eggs and vanilla\n3. Mix in flour and chocolate chips\n4. Bake at 350°F for 10-12 minutes",
                 Ingredients = new List<string> { "Flour", "Butter", "Sugar", "Eggs", "Chocolate chips", "Vanilla extract" }
             },
@@ -61,38 +48,11 @@ namespace CookHub.API.Controllers
                 Fat = 20,
                 Carbs = 35,
                 Protein = 30,
-                CategoryId = 4,
+                CategoryId = 3,
                 Instructions = "1. Cook ground beef with spices\n2. Warm tortillas\n3. Add beef to tortillas\n4. Top with vegetables and salsa",
                 Ingredients = new List<string> { "Ground beef", "Tortillas", "Onion", "Tomatoes", "Lettuce", "Cheese", "Salsa" }
             },
-            new Recipe
-            {
-                RecipeId = 5,
-                Name = "Bruschetta",
-                Description = "Italian appetizer with fresh tomatoes, basil, and olive oil",
-                ImageUrl = "https://images.unsplash.com/photo-1572441713131-4d8e2c4c2c4c?w=400&h=300&fit=crop&v=food5",
-                Calories = 120,
-                Fat = 5,
-                Carbs = 15,
-                Protein = 3,
-                CategoryId = 5,
-                Instructions = "1. Toast bread slices\n2. Mix tomatoes, basil, and olive oil\n3. Top bread with mixture\n4. Serve immediately",
-                Ingredients = new List<string> { "Baguette", "Tomatoes", "Fresh basil", "Olive oil", "Garlic", "Balsamic vinegar" }
-            },
-            new Recipe
-            {
-                RecipeId = 6,
-                Name = "Fettuccine Alfredo",
-                Description = "Creamy pasta with rich parmesan cheese sauce",
-                ImageUrl = "https://images.unsplash.com/photo-1621996346565-e3dbc353d2e5?w=400&h=300&fit=crop&crop=center&v=food6",
-                Calories = 750,
-                Fat = 35,
-                Carbs = 80,
-                Protein = 20,
-                CategoryId = 1,
-                Instructions = "1. Cook fettuccine pasta\n2. Make creamy alfredo sauce\n3. Combine pasta and sauce\n4. Garnish with parsley",
-                Ingredients = new List<string> { "Fettuccine", "Heavy cream", "Parmesan cheese", "Butter", "Garlic", "Parsley" }
-            },
+        
             new Recipe
             {
                 RecipeId = 7,
@@ -103,7 +63,7 @@ namespace CookHub.API.Controllers
                 Fat = 12,
                 Carbs = 8,
                 Protein = 8,
-                CategoryId = 2,
+                CategoryId = 1,
                 Instructions = "1. Chop vegetables\n2. Mix with feta cheese\n3. Add olives and dressing\n4. Serve chilled",
                 Ingredients = new List<string> { "Cucumber", "Tomatoes", "Red onion", "Feta cheese", "Kalamata olives", "Olive oil" }
             },
@@ -117,7 +77,7 @@ namespace CookHub.API.Controllers
                 Fat = 18,
                 Carbs = 28,
                 Protein = 6,
-                CategoryId = 3,
+                CategoryId = 2,
                 Instructions = "1. Make coffee mixture\n2. Layer ladyfingers\n3. Add mascarpone cream\n4. Chill for 4 hours",
                 Ingredients = new List<string> { "Ladyfingers", "Mascarpone cheese", "Coffee", "Eggs", "Sugar", "Cocoa powder" }
             },
@@ -131,24 +91,10 @@ namespace CookHub.API.Controllers
                 Fat = 22,
                 Carbs = 2,
                 Protein = 42,
-                CategoryId = 4,
+                CategoryId = 3,
                 Instructions = "1. Season salmon with herbs\n2. Grill for 4-5 minutes per side\n3. Serve with lemon wedges\n4. Garnish with fresh herbs",
                 Ingredients = new List<string> { "Salmon fillet", "Lemon", "Fresh herbs", "Olive oil", "Salt", "Black pepper" }
             },
-            new Recipe
-            {
-                RecipeId = 10,
-                Name = "Caprese Skewers",
-                Description = "Fresh mozzarella, tomato, and basil on skewers",
-                ImageUrl = "https://images.unsplash.com/photo-1572441713131-4d8e2c4c2c4c?w=400&h=300&fit=crop&crop=center&v=food10",
-                Calories = 90,
-                Fat = 6,
-                Carbs = 4,
-                Protein = 4,
-                CategoryId = 5,
-                Instructions = "1. Thread mozzarella balls\n2. Add cherry tomatoes\n3. Add fresh basil\n4. Drizzle with balsamic",
-                Ingredients = new List<string> { "Mozzarella balls", "Cherry tomatoes", "Fresh basil", "Balsamic glaze", "Olive oil" }
-            }
         };
 
         [HttpGet]

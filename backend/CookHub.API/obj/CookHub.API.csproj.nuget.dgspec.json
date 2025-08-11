@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/gamze/Desktop/untitled folder 2/CookHub-Vue3DotNetRecipeApp/backend/CookHub.API/CookHub.API.csproj": {}
+    "/Users/gamze/Desktop/cookhub/CookHub-Vue3DotNetRecipeApp/backend/CookHub.API/CookHub.API.csproj": {}
   },
   "projects": {
-    "/Users/gamze/Desktop/untitled folder 2/CookHub-Vue3DotNetRecipeApp/backend/CookHub.API/CookHub.API.csproj": {
+    "/Users/gamze/Desktop/cookhub/CookHub-Vue3DotNetRecipeApp/backend/CookHub.API/CookHub.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/gamze/Desktop/untitled folder 2/CookHub-Vue3DotNetRecipeApp/backend/CookHub.API/CookHub.API.csproj",
+        "projectUniqueName": "/Users/gamze/Desktop/cookhub/CookHub-Vue3DotNetRecipeApp/backend/CookHub.API/CookHub.API.csproj",
         "projectName": "CookHub.API",
-        "projectPath": "/Users/gamze/Desktop/untitled folder 2/CookHub-Vue3DotNetRecipeApp/backend/CookHub.API/CookHub.API.csproj",
+        "projectPath": "/Users/gamze/Desktop/cookhub/CookHub-Vue3DotNetRecipeApp/backend/CookHub.API/CookHub.API.csproj",
         "packagesPath": "/Users/gamze/.nuget/packages/",
-        "outputPath": "/Users/gamze/Desktop/untitled folder 2/CookHub-Vue3DotNetRecipeApp/backend/CookHub.API/obj/",
+        "outputPath": "/Users/gamze/Desktop/cookhub/CookHub-Vue3DotNetRecipeApp/backend/CookHub.API/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/gamze/.nuget/NuGet/NuGet.Config"
