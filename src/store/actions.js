@@ -12,7 +12,10 @@ export async function addRecipe({ commit }, recipe) {
 }
 
 export async function updateRecipe({ commit }, recipe) {
-  return await list.put(`recipes/${recipe.id}`, recipe);
+  console.log("Updating recipe:", recipe);
+  const response = await list.put(`recipes/${recipe.recipeId}`, recipe);
+  console.log("Update response:", response);
+  return response;
 }
 
 export async function getRecipeById({ commit }, id) {

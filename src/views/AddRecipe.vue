@@ -93,16 +93,16 @@ onMounted(async () => {
     try {
       const recipeData = await store.dispatch("getRecipeById", recipeId);
       name.value = recipeData.name;
-      category.value = recipeData.categoryId;
+      category.value = recipeData.categoryId.toString();
       description.value = recipeData.description;
       instructions.value = recipeData.instructions;
       imageUrl.value = recipeData.imageUrl;
-      videoUrl.value = recipeData.videoUrl;
+      videoUrl.value = recipeData.videoUrl || "";
       ingredients.value = recipeData.ingredients.join(", ");
-      calories.value = recipeData.calories;
-      carbs.value = recipeData.carbs;
-      fat.value = recipeData.fat;
-      protein.value = recipeData.protein;
+      calories.value = recipeData.calories.toString();
+      carbs.value = recipeData.carbs.toString();
+      fat.value = recipeData.fat.toString();
+      protein.value = recipeData.protein.toString();
     } catch (error) {
       console.error("Error fetching recipe:", error);
     }
@@ -121,42 +121,53 @@ const submitForm = async () => {
       .split(",")
       .map((item) => item.trim());
     const recipeData = {
-      recipeId: route.params.id,
+      recipeId: parseInt(route.params.id),
       name: name.value,
-      categoryId: category.value,
+      categoryId: parseInt(category.value),
       description: description.value,
       instructions: instructions.value,
       imageUrl: imageUrl.value,
       videoUrl: videoUrl.value,
       ingredients: ingredientsArray,
-      calories: calories.value,
-      carbs: carbs.value,
-      fat: fat.value,
-      protein: protein.value,
+      calories: parseInt(calories.value) || 0,
+      carbs: parseFloat(carbs.value) || 0,
+      fat: parseFloat(fat.value) || 0,
+      protein: parseFloat(protein.value) || 0,
       area: area.value,
     };
     let response;
     if (mode === "edit") {
-      recipeData.id = route.params.id;
       response = await store.dispatch("updateRecipe", recipeData);
+      if (response.status === 204) {
+        showAlert("success", "Recipe updated successfully");
+        setTimeout(() => {
+          router.push({
+            name: "RecipeDetails",
+            params: { id: route.params.id },
+          });
+        }, 2000);
+      } else {
+        showAlert("error", "Error updating recipe");
+      }
     } else {
       response = await store.dispatch("addRecipe", recipeData);
+      if (response.status === 201) {
+        showAlert("success", "Recipe created successfully");
+        setTimeout(() => {
+          router.push({
+            name: "RecipeDetails",
+            params: { id: response.data.recipeId },
+          });
+        }, 2000);
+      } else {
+        showAlert("error", "Error creating recipe");
+      }
     }
-    if (response.status === 201 || response.status === 200) {
-      showAlert("success", "Recipe saved successfully");
-      setTimeout(() => {
-        router.push({
-          name: "RecipeDetails",
-          params: { id: response.data.recipeId },
-        });
-      }, 2000);
-    } else {
-      showAlert("error", "Error saving recipe");
+      } catch (error) {
+      console.error("Error submitting form:", error);
+      console.error("Error details:", error.response?.data);
+      showAlert("error", `Error submitting form: ${error.response?.data || error.message}`);
     }
-  } catch (error) {
-    console.error("Error submitting form:", error);
-    showAlert("error", "Error submitting form. Please try again later.");
-  }
   isSubmitting.value = false;
 };
 </script>

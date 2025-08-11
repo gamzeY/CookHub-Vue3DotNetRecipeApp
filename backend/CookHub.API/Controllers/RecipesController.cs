@@ -130,22 +130,30 @@ namespace CookHub.API.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateRecipe(int id, Recipe recipe)
         {
-            var existingRecipe = _recipes.FirstOrDefault(r => r.RecipeId == id);
-            if (existingRecipe == null)
-                return NotFound();
+            try
+            {
+                var existingRecipe = _recipes.FirstOrDefault(r => r.RecipeId == id);
+                if (existingRecipe == null)
+                    return NotFound();
 
-            existingRecipe.Name = recipe.Name;
-            existingRecipe.Description = recipe.Description;
-            existingRecipe.ImageUrl = recipe.ImageUrl;
-            existingRecipe.Calories = recipe.Calories;
-            existingRecipe.Fat = recipe.Fat;
-            existingRecipe.Carbs = recipe.Carbs;
-            existingRecipe.Protein = recipe.Protein;
-            existingRecipe.CategoryId = recipe.CategoryId;
-            existingRecipe.Instructions = recipe.Instructions;
-            existingRecipe.Ingredients = recipe.Ingredients;
+                existingRecipe.Name = recipe.Name;
+                existingRecipe.Description = recipe.Description;
+                existingRecipe.ImageUrl = recipe.ImageUrl;
+                existingRecipe.VideoUrl = recipe.VideoUrl;
+                existingRecipe.Calories = recipe.Calories;
+                existingRecipe.Fat = recipe.Fat;
+                existingRecipe.Carbs = recipe.Carbs;
+                existingRecipe.Protein = recipe.Protein;
+                existingRecipe.CategoryId = recipe.CategoryId;
+                existingRecipe.Instructions = recipe.Instructions;
+                existingRecipe.Ingredients = recipe.Ingredients;
 
-            return NoContent();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error updating recipe: {ex.Message}");
+            }
         }
 
         [HttpDelete("{id}")]
