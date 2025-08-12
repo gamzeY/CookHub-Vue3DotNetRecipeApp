@@ -125,7 +125,6 @@ const ingredients = computed(() => {
 });
 const search = ref("");
 
-// Local state for recipe interactions
 const recipeLikes = ref(new Map());
 const recipeLikedStatus = ref(new Map());
 const userInteractions = ref([]);
@@ -152,7 +151,6 @@ const loadLikesFromStorage = () => {
   }
 };
 
-// Save likes to localStorage
 const saveLikesToStorage = () => {
   try {
     const likesData = Object.fromEntries(recipeLikes.value);
@@ -166,8 +164,6 @@ const saveLikesToStorage = () => {
     }
   }
 };
-
-
 
 const openRecipe = (item) => {
   router.push({ name: "RecipeDetails", params: { id: item.recipeId } });
@@ -212,7 +208,6 @@ const handleReadMore = (eventData) => {
     timestamp: new Date()
   });
   
-  // Navigate to recipe details
   router.push({ name: "RecipeDetails", params: { id: eventData.recipe.recipeId } });
 };
 
@@ -225,7 +220,7 @@ const handleLikeToggle = (eventData) => {
   recipeLikes.value.set(eventData.recipeId, eventData.newLikeCount);
   recipeLikedStatus.value.set(eventData.recipeId, eventData.isLiked);
   
-  // Save to localStorage
+
   saveLikesToStorage();
   
   userInteractions.value.push({
@@ -237,7 +232,6 @@ const handleLikeToggle = (eventData) => {
 
 
 onMounted(() => {
-  // Load likes from localStorage
   loadLikesFromStorage();
   
   list.get('Category').then((response) => {
