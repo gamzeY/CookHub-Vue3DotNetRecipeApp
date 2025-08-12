@@ -135,7 +135,6 @@ const submitForm = async () => {
       area: area.value,
     };
     
-    // Edit mode'da recipeId ekle
     if (mode === "edit") {
       recipeData.recipeId = parseInt(route.params.id);
     }
@@ -161,7 +160,7 @@ const submitForm = async () => {
       if (response.status === 201) {
         showAlert("success", "Recipe created successfully");
         setTimeout(() => {
-          // Home sayfasına yönlendir ve yeni recipe'yi göster
+     
           router.push({ name: "Home" });
         }, 2000);
       } else {
@@ -169,12 +168,9 @@ const submitForm = async () => {
       }
     }
       } catch (error) {
-      console.error("Error submitting form:", error);
-      console.error("Error response:", error.response);
-      console.error("Error status:", error.response?.status);
-      console.error("Error data:", error.response?.data);
-      console.error("Error message:", error.message);
       
+      console.error("Error response:", error.response);
+    
       let errorMessage = "Error submitting form";
       if (error.response?.data) {
         if (typeof error.response.data === 'string') {
