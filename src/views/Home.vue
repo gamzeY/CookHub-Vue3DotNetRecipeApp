@@ -204,6 +204,7 @@ import { computed, ref, watch, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import store from "../store";
 import list from "../axios";
+import { useCategories } from "../composables/useCategories";
 
 const router = useRouter();
 const route = useRoute();
@@ -230,17 +231,7 @@ onMounted(() => {
   });
 });
 
-const getCategoryName = (categoryId) => {
-  const categories = store.state.categories;
-  const category = categories.find(c => c.categoryId === categoryId);
-  return category ? category.name : "Other";
-};
-
-const getCategoryColor = (categoryId) => {
-  const categories = store.state.categories;
-  const category = categories.find(c => c.categoryId === categoryId);
-  return category ? category.color : 'grey';
-};
+const { getCategoryColor, getCategoryFullName: getCategoryName } = useCategories();
 
 // Watch for route changes to handle category filtering
 watch(() => route.query.category, (newCategory) => {

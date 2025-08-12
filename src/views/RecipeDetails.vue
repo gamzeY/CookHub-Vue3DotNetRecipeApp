@@ -206,6 +206,7 @@ import { ref, onMounted, computed } from "vue";
 import list from "../axios";
 import { useRoute, useRouter } from "vue-router";
 import store from "../store";
+import { useCategories } from "../composables/useCategories";
 
 const router = useRouter();
 const $route = useRoute();
@@ -263,17 +264,7 @@ const deleteRecipe = async () => {
   dialog.value = true;
 };
 
-const getCategoryName = (categoryId) => {
-  const categories = store.state.categories;
-  const category = categories.find(c => c.categoryId === categoryId);
-  return category ? category.name : "Other";
-};
-
-const getCategoryColor = (categoryId) => {
-  const categories = store.state.categories;
-  const category = categories.find(c => c.categoryId === categoryId);
-  return category ? category.color : 'grey';
-};
+const { getCategoryColor, getCategoryFullName: getCategoryName } = useCategories();
 </script>
 
 <style scoped>

@@ -81,6 +81,7 @@ import { computed, ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import store from "./store";
 import list from "./axios";
+import { useCategories } from "./composables/useCategories";
 
 const drawer = ref(true);
 const categories = ref([]);
@@ -111,30 +112,7 @@ const selectCategory = (categoryId) => {
   });
 };
 
-const getCategoryColor = (categoryId) => {
-  const category = categories.value.find(c => c.categoryId === categoryId);
-  return category ? category.color : 'grey';
-};
-
-const getCategoryIcon = (categoryId) => {
-  const category = categories.value.find(c => c.categoryId === categoryId);
-  return category ? category.icon : 'mdi-food';
-};
-
-const getCategoryLetter = (categoryId) => {
-  const category = categories.value.find(c => c.categoryId === categoryId);
-  return category ? category.letter : 'O';
-};
-
-const getCategoryAbbreviation = (categoryId) => {
-  const category = categories.value.find(c => c.categoryId === categoryId);
-  return category ? category.abbreviation : '..';
-};
-
-const getCategoryFullName = (categoryId) => {
-  const category = categories.value.find(c => c.categoryId === categoryId);
-  return category ? category.name : 'Unknown Category';
-};
+const { getCategoryColor, getCategoryIcon, getCategoryLetter, getCategoryAbbreviation, getCategoryFullName } = useCategories();
 </script>
 
 <style scoped>

@@ -63,6 +63,7 @@ import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import list from '../axios';
 import store from '@/store';
+import { useCategories } from '../composables/useCategories';
 
 const categories = ref([]);
 const router = useRouter();
@@ -94,25 +95,7 @@ const goToHome = () => {
   router.push({ name: 'Home' });
 };
 
-const getCategoryColor = (categoryId) => {
-  const category = categories.value.find(c => c.categoryId === categoryId);
-  return category ? category.color : 'grey';
-};
-
-const getCategoryIcon = (categoryId) => {
-  const category = categories.value.find(c => c.categoryId === categoryId);
-  return category ? category.icon : 'mdi-food';
-};
-
-const getCategoryLetter = (categoryId) => {
-  const category = categories.value.find(c => c.categoryId === categoryId);
-  return category ? category.letter : 'O';
-};
-
-const getCategoryAbbreviation = (categoryId) => {
-  const category = categories.value.find(c => c.categoryId === categoryId);
-  return category ? category.abbreviation : '..';
-};
+const { getCategoryColor, getCategoryIcon, getCategoryLetter, getCategoryAbbreviation } = useCategories();
 </script>
 
 <style scoped>
