@@ -70,6 +70,7 @@
       </v-toolbar>
     </v-card>
 
+
     <!-- Recipe Grid -->
     <v-card class="recipe-section" elevation="0">
       <div class="section-header mb-4">
@@ -89,107 +90,16 @@
                 md="4"
                 lg="3"
               >
-                <v-card 
-                  class="recipe-card mx-auto" 
-                  width="100%" 
-                  max-width="350"
-                  height="400"
-                  elevation="4"
-                  hover
-                  @click="() => toggleExpand(item)"
-                >
-                  <v-img 
-                    :src="item.raw.imageUrl" 
-                    :alt="item.raw.name"
-                    height="200"
-                    cover
-                    class="recipe-image"
-                  >
-                    <template v-slot:placeholder>
-                      <div class="d-flex align-center justify-center fill-height">
-                        <v-progress-circular indeterminate color="primary"></v-progress-circular>
-                      </div>
-                    </template>
-                    <template v-slot:error>
-                      <div class="d-flex align-center justify-center fill-height recipe-fallback">
-                        <div class="fallback-content">
-                          <v-icon size="48" color="grey">mdi-food</v-icon>
-                          <div class="fallback-text">{{ item.raw.name }}</div>
-                        </div>
-                      </div>
-                    </template>
-                  </v-img>
-                  
-                  <v-card-title class="recipe-title">
-                    {{ item.raw.name }}
-                  </v-card-title>
-                  
-                  <v-card-text class="recipe-description">
-                    {{ item.raw.description }}
-                  </v-card-text>
 
-                  <v-card-actions class="recipe-actions">
-                    <v-chip
-                      :color="getCategoryColor(item.raw.categoryId)"
-                      size="small"
-                      class="category-chip"
-                    >
-                      {{ getCategoryName(item.raw.categoryId) }}
-                    </v-chip>
-                    
-                    <v-spacer></v-spacer>
-                    
-                    <v-btn
-                      color="primary"
-                      variant="text"
-                      size="small"
-                      @click.stop="() => openRecipe(item.raw)"
-                      class="read-btn"
-                    >
-                      Read More
-                      <v-icon right size="small">mdi-arrow-right</v-icon>
-                    </v-btn>
-                  </v-card-actions>
+                <RecipeCard
+                  :recipe="item.raw"
+                  :initial-like-count="getRecipeLikeCount(item.raw.recipeId)"
+                  :initial-is-liked="isRecipeLiked(item.raw.recipeId)"
+                  @recipe-click="handleRecipeClick"
+                  @read-more="handleReadMore"
+                  @like-toggle="handleLikeToggle"
 
-                  <v-expand-transition>
-                    <div v-if="isExpanded(item)" class="nutrition-section">
-                      <v-divider></v-divider>
-                      <v-card-text class="nutrition-content">
-                        <h4 class="nutrition-title mb-3">Nutrition Information</h4>
-                        <v-row>
-                          <v-col cols="6" sm="3">
-                            <div class="nutrition-item">
-                              <div class="nutrition-icon">🔥</div>
-                              <div class="nutrition-value">{{ item.raw.calories }}</div>
-                              <div class="nutrition-label">Calories</div>
-                            </div>
-                          </v-col>
-                          <v-col cols="6" sm="3">
-                            <div class="nutrition-item">
-                              <div class="nutrition-icon">🍔</div>
-                              <div class="nutrition-value">{{ item.raw.fat }}g</div>
-                              <div class="nutrition-label">Fat</div>
-                            </div>
-                          </v-col>
-                          <v-col cols="6" sm="3">
-                            <div class="nutrition-item">
-                              <div class="nutrition-icon">🍞</div>
-                              <div class="nutrition-value">{{ item.raw.carbs }}g</div>
-                              <div class="nutrition-label">Carbs</div>
-                            </div>
-                          </v-col>
-                          <v-col cols="6" sm="3">
-                            <div class="nutrition-item">
-                              <div class="nutrition-icon">🍗</div>
-                              <div class="nutrition-value">{{ item.raw.protein }}g</div>
-                              <div class="nutrition-label">Protein</div>
-                            </div>
-                          </v-col>
-                        </v-row>
-                      </v-card-text>
-                    </div>
-                  </v-expand-transition>
-                </v-card>
+                />
               </v-col>
             </v-row>
           </v-container>
@@ -205,15 +115,59 @@ import { useRouter, useRoute } from "vue-router";
 import store from "../store";
 import list from "../axios";
 import { useCategories } from "../composables/useCategories";
+import RecipeCard from "../components/RecipeCard.vue";
 
 const router = useRouter();
 const route = useRoute();
 
 const ingredients = computed(() => {
-
   return store.state.searchedRecipes;
 });
 const search = ref("");
+
+// Local state for recipe interactions
+const recipeLikes = ref(new Map());
+const recipeLikedStatus = ref(new Map());
+const userInteractions = ref([]);
+
+// Load likes from localStorage on component mount
+const loadLikesFromStorage = () => {
+  try {
+    const storedLikes = localStorage.getItem('recipeLikes');
+    const storedLikedStatus = localStorage.getItem('recipeLikedStatus');
+    
+    if (storedLikes) {
+      const likesData = JSON.parse(storedLikes);
+      recipeLikes.value = new Map(Object.entries(likesData));
+    }
+    
+    if (storedLikedStatus) {
+      const likedStatusData = JSON.parse(storedLikedStatus);
+      recipeLikedStatus.value = new Map(Object.entries(likedStatusData));
+    }
+  } catch (error) {
+    if (import.meta.env.DEV) {
+      console.error('Error loading likes from localStorage:', error);
+    }
+  }
+};
+
+// Save likes to localStorage
+const saveLikesToStorage = () => {
+  try {
+    const likesData = Object.fromEntries(recipeLikes.value);
+    const likedStatusData = Object.fromEntries(recipeLikedStatus.value);
+    
+    localStorage.setItem('recipeLikes', JSON.stringify(likesData));
+    localStorage.setItem('recipeLikedStatus', JSON.stringify(likedStatusData));
+  } catch (error) {
+    if (import.meta.env.DEV) {
+      console.error('Error saving likes to localStorage:', error);
+    }
+  }
+};
+
+
 
 const openRecipe = (item) => {
   router.push({ name: "RecipeDetails", params: { id: item.recipeId } });
@@ -223,7 +177,69 @@ const addRecipe = (mode) => {
   router.push({ name: "AddRecipe", params: { mode: mode } });
 };
 
+const getRecipeLikeCount = (recipeId) => {
+  return recipeLikes.value.get(recipeId) || 0;
+};
+
+const isRecipeLiked = (recipeId) => {
+  return recipeLikedStatus.value.get(recipeId) || false;
+};
+
+// Event handlers for RecipeCard component emits
+const handleRecipeClick = (eventData) => {
+  // Only log in development mode
+  if (import.meta.env.DEV) {
+    console.log('Recipe clicked:', eventData);
+  }
+  
+  userInteractions.value.push({
+    type: 'recipe-click',
+    data: eventData,
+    timestamp: new Date()
+  });
+ 
+  router.push({ name: "RecipeDetails", params: { id: eventData.recipeId } });
+};
+
+const handleReadMore = (eventData) => {
+  if (import.meta.env.DEV) {
+    console.log('Read more clicked:', eventData);
+  }
+  
+  userInteractions.value.push({
+    type: 'read-more',
+    data: eventData,
+    timestamp: new Date()
+  });
+  
+  // Navigate to recipe details
+  router.push({ name: "RecipeDetails", params: { id: eventData.recipe.recipeId } });
+};
+
+const handleLikeToggle = (eventData) => {
+  if (import.meta.env.DEV) {
+    console.log('Like toggled:', eventData);
+  }
+  
+  // Update local state
+  recipeLikes.value.set(eventData.recipeId, eventData.newLikeCount);
+  recipeLikedStatus.value.set(eventData.recipeId, eventData.isLiked);
+  
+  // Save to localStorage
+  saveLikesToStorage();
+  
+  userInteractions.value.push({
+    type: 'like-toggle',
+    data: eventData,
+    timestamp: new Date()
+  });
+};
+
+
 onMounted(() => {
+  // Load likes from localStorage
+  loadLikesFromStorage();
+  
   list.get('Category').then((response) => {
     store.commit("setCategories", response.data);
   }).catch((error) => {
