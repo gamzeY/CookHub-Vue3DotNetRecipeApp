@@ -69,22 +69,16 @@ const router = useRouter();
 
 onMounted(async () => {
   try {
-    const response = await list.get('/category');
+    const response = await list.get('Category');
     categories.value = response.data || [];
+    store.commit('setCategories', response.data);
   } catch (error) {
     console.error('Error fetching categories:', error);
-    // Fallback to default categories if API fails
-    categories.value = [
-      { categoryId: 1, name: 'Pasta & Italian', description: 'Delicious pasta dishes' },
-      { categoryId: 2, name: 'Salads & Fresh', description: 'Healthy and fresh salads' },
-      { categoryId: 3, name: 'Desserts & Sweets', description: 'Sweet treats and desserts' },
-      { categoryId: 4, name: 'Main Dishes', description: 'Main course meals' },
-      { categoryId: 5, name: 'Appetizers & Snacks', description: 'Starters and snacks' }
-    ];
+    categories.value = [];
   }
 });
 const selectCategory = (categoryId) => {
-  // Navigate to home with category filter
+  
   router.push({ name: 'Home', query: { category: categoryId } });
   
   // Fetch recipes by category
@@ -101,47 +95,23 @@ const goToHome = () => {
 };
 
 const getCategoryColor = (categoryId) => {
-  const colors = {
-    1: "orange",
-    2: "green", 
-    3: "pink",
-    4: "blue",
-    5: "purple"
-  };
-  return colors[categoryId] || "grey";
+  const category = categories.value.find(c => c.categoryId === categoryId);
+  return category ? category.color : 'grey';
 };
 
 const getCategoryIcon = (categoryId) => {
-  const icons = {
-    1: "mdi-pasta",
-    2: "mdi-food-salad", 
-    3: "mdi-cake-variant",
-    4: "mdi-food-steak",
-    5: "mdi-food-apple"
-  };
-  return icons[categoryId] || "mdi-food";
+  const category = categories.value.find(c => c.categoryId === categoryId);
+  return category ? category.icon : 'mdi-food';
 };
 
 const getCategoryLetter = (categoryId) => {
-  const letters = {
-    1: "P",
-    2: "S", 
-    3: "D",
-    4: "N",
-    5: "A"
-  };
-  return letters[categoryId] || "O";
+  const category = categories.value.find(c => c.categoryId === categoryId);
+  return category ? category.letter : 'O';
 };
 
 const getCategoryAbbreviation = (categoryId) => {
-  const abbreviations = {
-    1: "I..",
-    2: "F.", 
-    3: "S.",
-    4: "M",
-    5: "S."
-  };
-  return abbreviations[categoryId] || "..";
+  const category = categories.value.find(c => c.categoryId === categoryId);
+  return category ? category.abbreviation : '..';
 };
 </script>
 
