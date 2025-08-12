@@ -1,4 +1,5 @@
 export default {
   searchedRecipes: [],
-  recipes: []
+  recipes: [],
+  categories: []
 }

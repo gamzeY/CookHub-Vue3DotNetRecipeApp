@@ -202,7 +202,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import list from "../axios";
 import { useRoute, useRouter } from "vue-router";
 import store from "../store";
@@ -218,12 +218,17 @@ const recipeId = $route.params.id;
 
 onMounted(async () => {
   try {
+    // Load categories first
+    const categoriesResponse = await list.get('Category');
+    store.commit("setCategories", categoriesResponse.data);
+    
+    // Then load recipe
     const response = await list.get(`recipes/${$route.params.id}`);
     const meal = response.data;
     recipe.value = meal;
     descriptions.value = meal.description;
   } catch (error) {
-    console.error("Error fetching recipe:", error);
+    console.error("Error fetching data:", error);
   }
 });
 
@@ -259,25 +264,15 @@ const deleteRecipe = async () => {
 };
 
 const getCategoryName = (categoryId) => {
-  const categories = {
-    1: "Pasta",
-    2: "Salads", 
-    3: "Desserts",
-    4: "Main Dishes",
-    5: "Appetizers"
-  };
-  return categories[categoryId] || "Other";
+  const categories = store.state.categories;
+  const category = categories.find(c => c.categoryId === categoryId);
+  return category ? category.name : "Other";
 };
 
 const getCategoryColor = (categoryId) => {
-  const colors = {
-    1: "orange",
-    2: "green", 
-    3: "pink",
-    4: "blue",
-    5: "purple"
-  };
-  return colors[categoryId] || "grey";
+  const categories = store.state.categories;
+  const category = categories.find(c => c.categoryId === categoryId);
+  return category ? category.color : 'grey';
 };
 </script>
 

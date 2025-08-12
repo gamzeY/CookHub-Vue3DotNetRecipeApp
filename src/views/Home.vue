@@ -200,7 +200,7 @@
 </template>
 
 <script setup>
-import { computed, ref, watch } from "vue";
+import { computed, ref, watch, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import store from "../store";
 import list from "../axios";
@@ -209,8 +209,7 @@ const router = useRouter();
 const route = useRoute();
 
 const ingredients = computed(() => {
-  console.log('Current recipes in store:', store.state.searchedRecipes);
-  console.log('Recipe count:', store.state.searchedRecipes.length);
+
   return store.state.searchedRecipes;
 });
 const search = ref("");
@@ -223,26 +222,24 @@ const addRecipe = (mode) => {
   router.push({ name: "AddRecipe", params: { mode: mode } });
 };
 
+onMounted(() => {
+  list.get('Category').then((response) => {
+    store.commit("setCategories", response.data);
+  }).catch((error) => {
+    console.error('Error fetching categories:', error);
+  });
+});
+
 const getCategoryName = (categoryId) => {
-  const categories = {
-    1: "Pasta",
-    2: "Salads", 
-    3: "Desserts",
-    4: "Main Dishes",
-    5: "Appetizers"
-  };
-  return categories[categoryId] || "Other";
+  const categories = store.state.categories;
+  const category = categories.find(c => c.categoryId === categoryId);
+  return category ? category.name : "Other";
 };
 
 const getCategoryColor = (categoryId) => {
-  const colors = {
-    1: "orange",
-    2: "green", 
-    3: "pink",
-    4: "blue",
-    5: "purple"
-  };
-  return colors[categoryId] || "grey";
+  const categories = store.state.categories;
+  const category = categories.find(c => c.categoryId === categoryId);
+  return category ? category.color : 'grey';
 };
 
 // Watch for route changes to handle category filtering
@@ -255,7 +252,6 @@ watch(() => route.query.category, (newCategory) => {
       console.error('Error fetching recipes by category:', error);
     });
   } else {
-    // If no category filter, fetch all recipes
     list.get(`recipes`).then((response) => {
       store.commit("setRecipes", response.data);
     }).catch((error) => {
@@ -264,7 +260,6 @@ watch(() => route.query.category, (newCategory) => {
   }
 }, { immediate: true });
 
-// onMounted is handled by the watch with immediate: true
 </script>
 
 <style scoped>
@@ -392,7 +387,7 @@ watch(() => route.query.category, (newCategory) => {
 }
 
 .recipe-fallback {
-  background-color: #f5f5f5; /* Fallback background color */
+  background-color: #f5f5f5; 
   border-radius: 16px;
   display: flex;
   flex-direction: column;
